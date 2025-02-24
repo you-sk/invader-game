@@ -1,4 +1,9 @@
 /dist/
 /.idea/
 /.parcel-cache/
-dist
+# IDE 設定ファイルを無視
+.idea/
+# Parcel キャッシュを無視
+.parcel-cache/
+# ビルド出力を無視
+dist/
