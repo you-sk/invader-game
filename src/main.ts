@@ -1,14 +1,7 @@
+// 🎲 1. 設定・変数定義
 const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-if (!ctx) {
-    throw new Error("Canvasがサポートされていません");
-}
-
-// ctx が null でないことを明示する
-const context = ctx as CanvasRenderingContext2D;
-
-// プレイヤー設定
 const player = {
     x: 350,
     y: 550,
@@ -17,19 +10,56 @@ const player = {
     speed: 5,
 };
 
-// プレイヤーを描画する関数
+// 🔥 敵キャラクター設定
+interface Enemy {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    alive: boolean;
+}
+
+const enemies: Enemy[] = [];
+const rows = 3;
+const cols = 5;
+const enemyWidth = 50;
+const enemyHeight = 30;
+const enemyPadding = 20;
+const offsetTop = 50;
+const offsetLeft = 50;
+
+// 敵の初期化
+for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+        const enemyX = col * (enemyWidth + enemyPadding) + offsetLeft;
+        const enemyY = row * (enemyHeight + enemyPadding) + offsetTop;
+        enemies.push({ x: enemyX, y: enemyY, width: enemyWidth, height: enemyHeight, alive: true });
+    }
+}
+
+// 🎨 2. 描画関数
 function drawPlayer() {
-    context.fillStyle = "white";
-    context.fillRect(player.x, player.y, player.width, player.height);
+    ctx.fillStyle = "white";
+    ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
-// 画面を更新する関数
+function drawEnemies() {
+    ctx.fillStyle = "red";
+    enemies.forEach((enemy) => {
+        if (enemy.alive) {
+            ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+        }
+    });
+}
+
+// 🔄 3. 更新処理
 function update() {
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
+    drawEnemies();
 }
 
-// キーボード入力を処理する関数
+// 🎮 4. キーボード入力の処理
 function handleKeyDown(event: KeyboardEvent) {
     if (event.key === "ArrowLeft" && player.x > 0) {
         player.x -= player.speed;
@@ -37,14 +67,11 @@ function handleKeyDown(event: KeyboardEvent) {
         player.x += player.speed;
     }
 }
-
-// イベントリスナーを設定
 window.addEventListener("keydown", handleKeyDown);
 
-// ゲームループを開始
+// 🚀 5. ゲームループ
 function gameLoop() {
     update();
     requestAnimationFrame(gameLoop);
 }
-
 gameLoop();
