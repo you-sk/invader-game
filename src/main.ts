@@ -1,7 +1,7 @@
 // main.ts
 import { drawPlayer, handlePlayerInput } from './player';
-import { drawBullets, moveBullets } from './bullet';
-import { initEnemies, drawEnemies } from './enemy';
+import { drawBullets, moveBullets, bullets } from './bullet';
+import { drawEnemies, moveEnemies, initEnemies, checkBulletCollisions } from './enemy';
 
 import { ctx } from './canvas'; // Canvasのコンテキストをインポート
 
@@ -19,7 +19,8 @@ function update() {
     drawBullets();
     drawEnemies();
     moveBullets();
-    // moveEnemies(); 未実装
+    moveEnemies();
+    checkBulletCollisions(bullets);
 }
 
 // ゲームループ
