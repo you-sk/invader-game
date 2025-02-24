@@ -2,7 +2,7 @@
 import { drawPlayer, handlePlayerInput } from './player';
 import { drawBullets, moveBullets, bullets } from './bullet';
 import { drawEnemies, moveEnemies, initEnemies, checkBulletCollisions, enemies } from './enemy';
-import { isGameOver, showGameOver, checkEnemyReachBottom, handleGameOverInput } from './game';
+import { isGameOver, showGameOver, checkEnemyReachBottom, handleGameOverInput, isGameClear, showGameClear, checkAllEnemiesDefeated } from './game';
 
 
 import { ctx } from './canvas'; // Canvasのコンテキストをインポート
@@ -22,6 +22,10 @@ function update() {
         showGameOver();
         return;
     }
+    if (isGameClear()) {
+        showGameClear();
+        return;
+    }
     drawPlayer();
     drawBullets();
     drawEnemies();
@@ -29,6 +33,7 @@ function update() {
     moveEnemies();
     checkBulletCollisions(bullets);
     checkEnemyReachBottom(enemies);
+    checkAllEnemiesDefeated();
 }
 
 // ゲームループ
