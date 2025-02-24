@@ -1,9 +1,10 @@
 // main.ts
-import { player, drawPlayer, handlePlayerInput } from './player';
-import { enemies, initEnemies, drawEnemies } from './enemy';
+import { drawPlayer, handlePlayerInput } from './player';
+import { drawBullets, moveBullets } from './bullet';
+import { initEnemies, drawEnemies } from './enemy';
 
-const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+import { ctx } from './canvas'; // Canvasのコンテキストをインポート
+
 
 // 初期化処理
 function init() {
@@ -13,9 +14,12 @@ function init() {
 
 // 更新処理
 function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     drawPlayer();
+    drawBullets();
     drawEnemies();
+    moveBullets();
+    // moveEnemies(); 未実装
 }
 
 // ゲームループ

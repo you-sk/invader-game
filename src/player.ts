@@ -1,6 +1,6 @@
 // player.ts
-const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+import { ctx } from './canvas';
+import { shootBullet } from './bullet';
 
 export const player = {
     x: 350,
@@ -18,9 +18,11 @@ export function drawPlayer() {
 
 // プレイヤーの移動処理
 export function handlePlayerInput(event: KeyboardEvent) {
-    if (event.key === "ArrowLeft" && player.x > 0) {
+    if (event.key === 'ArrowLeft' && player.x > 0) {
         player.x -= player.speed;
-    } else if (event.key === "ArrowRight" && player.x + player.width < canvas.width) {
+    } else if (event.key === 'ArrowRight' && player.x + player.width < ctx.canvas.width) {
         player.x += player.speed;
+    } else if (event.key === ' ') {
+        shootBullet(player.x + player.width / 2, player.y);
     }
 }

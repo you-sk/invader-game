@@ -1,6 +1,5 @@
 // enemy.ts
-const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+import { ctx } from './canvas';
 
 interface Enemy {
     x: number;
