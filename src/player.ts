@@ -8,6 +8,8 @@ export const player = {
     width: 100,
     height: 20,
     speed: 5,
+    initialX: 350, // 初期位置を設定
+    initialY: 550,
 };
 
 // プレイヤーの描画
@@ -25,4 +27,10 @@ export function handlePlayerInput(event: KeyboardEvent) {
     } else if (event.key === ' ') {
         shootBullet(player.x + player.width / 2, player.y);
     }
+}
+
+// 🎮 プレイヤーを初期位置にリセット
+export function resetPlayer() {
+    player.x = player.initialX;
+    player.y = player.initialY;
 }
